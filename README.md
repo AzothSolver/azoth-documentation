@@ -55,11 +55,7 @@ This repository contains both high-level overviews and in-depth technical docume
 
 ---
 
-## 🤝 Contribution & Collaboration
-
-This documentation is evolving. Contributions from researchers, protocol developers, and solvers are welcome — especially around CIP alignment and benchmarking practices.
-
-If you’re part of the CoW DAO or ecosystem team and want to collaborate, feel free to open an issue or reach out via:
+## 🤝 Contact
 
 - 📧 Email: [azothsolver@gmail.com](mailto:azothsolver@gmail.com)
 - 🐦 Twitter/X: [@AzothSolver](https://x.com/AzothSolver)
