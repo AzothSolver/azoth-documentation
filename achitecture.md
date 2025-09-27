@@ -1,75 +1,87 @@
+# 🧱 AzothSolver Architecture Overview
+
+This document outlines the core modules and design principles behind the **AzothSolver ecosystem**—a modular, high-performance open-source framework for decentralized systems, blockchain tooling, and backend infrastructure.
 
 ---
 
-## 🧱 Module Breakdown
+## 📦 Core Modules
 
-### 1. **Auction Listener**
-- Subscribes to CoW Protocol auctions via HTTP polling or WebSocket (when available).
-- Decodes auction data (`orders`, `tokens`, `fee`) into internal format.
+### 1. **Data Ingestion / Event Listener**
 
-### 2. **Quote Generator**
-- Core logic to identify optimal trade paths and token pairs.
-- Supports future plug-in design for multiple algorithm strategies (e.g., baseline, fallback, custom heuristic).
+* Subscribes to data sources via HTTP, WebSocket, or other transport layers.
+* Decodes raw input into internal structured formats for downstream processing.
+* Designed to support multiple protocols, APIs, or blockchain networks.
 
-### 3. **Objective Evaluator**
-- Applies constraints and scoring rules:
-  - Min surplus violation
-  - Fee target compliance
-  - Path validity
-- Modular scoring functions for experimentation (e.g. CoW-maximization vs solver-centric strategies).
+### 2. **Computation / Algorithm Engine**
 
-### 4. **Auction Builder**
-- Converts successful quote + evaluation into a valid `QuoteSubmission` per CoW spec.
-- Prepares payload with signature, quote ID, and solution JSON.
+* Core logic for processing, transforming, and analyzing ingested data.
+* Supports plug-in algorithm strategies and experimental modules.
+* Modular design allows integration of custom heuristics, pathfinding, or optimization strategies.
 
-### 5. **Submission Engine**
-- Manages request throttling and retry logic.
-- Sends quote to CoW Protocol driver (in shadow mode).
+### 3. **Evaluation & Scoring**
 
-### 6. **Monitoring & Metrics**
-- Exposes Prometheus-compatible metrics for:
-  - Quoting latency
-  - Submission success/failure
-  - Path computation time
-- Optional Grafana dashboards planned for Q4 2025.
+* Applies validation and scoring rules to generated outputs.
+* Supports modular evaluation strategies, including:
 
----
+  * Resource or cost efficiency
+  * Performance or throughput optimization
+  * Custom business or protocol-specific criteria
 
-## 🚧 In Progress
+### 4. **Output Adapter / Formatter**
 
-- [ ] Benchmark pathfinding engine using synthetic auctions
-- [ ] Add signature auth for CoW solver registration
-- [ ] CIP-aligned quote evaluation scoring function
-- [ ] Enable fallback quote path modules (e.g., 0x RFQ, Base liquidity)
+* Converts computed results into the required format for downstream systems.
+* Supports multiple output channels (APIs, connectors, databases, dashboards).
+
+### 5. **Connector / Dispatcher**
+
+* Handles delivery of outputs with retry, throttling, or batching logic.
+* Ensures high reliability under load, respecting rate limits and priority channels.
+
+### 6. **Telemetry & Observability**
+
+* Exposes real-time metrics via Prometheus or compatible systems.
+* Monitors latency, throughput, error rates, and resource utilization.
+* Optional dashboards for live monitoring (Grafana-compatible).
 
 ---
 
-## 🧪 System Design Goals
+## 🚧 Experimental / In-Progress Features
 
-| Goal                     | Target                          |
-|--------------------------|---------------------------------|
-| **Latency Budget**       | < 5ms from auction to submit    |
-| **Modularity**           | Plug-in quote + scoring modules |
-| **Protocol Compliance**  | CIP-11, CIP-67 ready            |
-| **Deployment**           | Bare metal, tuned kernel        |
-| **Monitoring**           | Full Prometheus compatibility   |
+* [ ] Benchmark core algorithm performance under simulated workloads
+* [ ] Add authentication, security, and API key support
+* [ ] Extend modular adapters to integrate new protocols or APIs
+* [ ] Enable plug-in strategy modules for specialized workflows
 
 ---
 
-## 📁 Related Files
+## 🧪 Design Principles
 
-- [`AzothSolver-Whitepaper.md`](../assets/documents/AzothSolver-Whitepaper.md)
-
+| Principle         | Goal / Target                                            |
+| ----------------- | -------------------------------------------------------- |
+| **Performance**   | Efficient processing with low latency pipelines          |
+| **Modularity**    | Easy integration of new modules or strategies            |
+| **Extensibility** | Support multiple protocols, APIs, or blockchain networks |
+| **Observability** | Full telemetry and monitoring support                    |
+| **Reliability**   | Resilient dispatching and data delivery                  |
 
 ---
 
-## 📬 Questions?
+## 📁 Related Documentation
 
-Reach out via [X (@AzothSolver)](https://x.com/AzothSolver) or [email](mailto:azothsolver@gmail.com).
+* [`AzothSolver-Whitepaper.md`](../assets/documents/AzothSolver-Whitepaper.md) – Overview of system design, OSS philosophy, and roadmap.
+* `project-structure.md` – Updated to reflect general OSS project layout.
+* `documentation/` – Reference guides, usage examples, and developer onboarding.
+
+---
+
+## 📬 Contact
+
+* X/Twitter: [@AzothSolver](https://x.com/AzothSolver)
+* Email: [azothsolver@gmail.com](mailto:azothsolver@gmail.com)
 
 ---
 
 ## 🧪 License
 
-**License**: `NotYetDefined`  
-© AzothSolver, 2025
+**License**: MIT or Apache 2.0
+© AzothSolver, 2025 – Open-source infrastructure for decentralized systems and experimental OSS tooling.
